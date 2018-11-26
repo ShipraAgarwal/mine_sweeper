@@ -1,0 +1,23 @@
+<div class="container">
+	<div class="row form-head">
+		<h1 class="col-sm-12 text-center">Mine Sweeper</h1>
+	</div>
+	<div class="row form-content">
+		<div class="col-sm-2"></div>
+		<div class="col-sm-8">
+			<%= form_tag({controller: 'prepare_matrix', action: 'generate_matrix'}, method: 'get') do %>
+			    <div class="form-group">
+					<label>Number of Rows</label>
+					<%= number_field :matrix, :rows, step: 1, min: 8, required: true, class: 'form-control' %>
+				</div>
+				<div class="form-group">
+					<label>Number of Columns</label>
+					<%= number_field :matrix, :columns, step: 1, min: 8, required: true, class: 'form-control' %>
+				</div>
+				<%= submit_tag :submit, class: 'btn btn-primary'%>
+				
+			<% end %>
+		</div>
+		<div class="col-sm-2"></div>
+	</div>
+</div>

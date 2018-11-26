@@ -1,0 +1,81 @@
+<div class="container" onload="alert("start")">
+	<% i=0
+	j=0 %>
+	<div class="row">
+		<div class="col-sm-8">
+			<table class="table board table-responsive" border="0" >
+				<% @demo.each do |row|
+					j=0 %>
+					<tr>
+						<% row.each do |col| %>
+							<td onclick="update_matrix(this)" data-row="<%= i %>" data-col="<%= j %>"data-flag="closed" id="<%= i%><%=j %>" class="closed"></td>
+							<% j+=1 %>
+						<% end %>
+					</tr>
+					<% i+=1 %>
+				<% end %>
+			</table>
+		</div>
+		<div class="resultcontainer col-sm-4">
+			
+			<p>Timer: <span id="timer">0 sec</span></p>
+			<h3 id="msg"></h3>
+		</div>
+	</div>
+	<div class="row"> <%= button_to "change matrix", root_path, method: :get %> </div>
+	<script type="text/javascript">
+		var time = 0;
+		var t1 = 0;
+		time_id=setInterval(time_count,1000);
+		
+		function time_count(){
+			var temp = new Date();
+			var t2 = temp.getSeconds(); 
+			if (t1 != t2){
+				time++;
+				t1 = t2;
+			}
+			
+			document.getElementById("timer").innerHTML = time + ' sec';
+		}
+		function update_matrix(cell){
+
+			var row = cell.attributes[1].nodeValue;
+			var col = cell.attributes[2].nodeValue;
+			var flag = cell.attributes[3].nodeValue;
+			var id = cell.attributes[4].nodeValue;
+			$.ajax({
+				url: "update_matrix",
+				type: 'GET',
+				data:{
+					"row":row,
+					"col":col,
+					"id":id
+				},
+				success: function(data) {
+					
+		      $(JSON.parse(data)).each(function(i,d){
+		        if(d["value"]==-1){
+		          document.getElementById("msg").innerHTML = "YOU LOST";
+		          
+		          $('td').attr("onclick" , " ");
+		          clearInterval(time_id);
+		        }
+		        else if(d["pending"]==0){
+		          document.getElementById("msg").innerHTML = "YOU WON";
+		          $('td').attr("onclick" , " ");
+		          clearInterval(time_id);
+		        }		            	
+		        var e = document.getElementById(d["id"]);
+		        e.innerHTML=d["value"];
+		        e.className = "opened"
+		        e.attributes[0].nodeValue = " "
+		       });
+		    }
+				
+			});
+			
+		}
+
+	</script>
+</div>
