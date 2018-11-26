@@ -11,15 +11,9 @@ class PrepareMatrixController < ApplicationController
 		@@mat = Array.new(@@rows) {Array.new(@@columns,0)}
 		@@total_mines = (@@rows*@@columns)/4
 		@@safe_cells = (@@rows * @@columns) - @@total_mines 
-		#byebug
-		#byebug
-        #assign mines (1) to cells
       
-       	@@first_click = "true"
+       	@@first_click = true
         @demo = @@mat
-        
-        #byebug
-     	#redirect_to '/display_board', matrix: @matrix
 	end
 	def place_mines(p,q)
 		count = 0
@@ -32,7 +26,7 @@ class PrepareMatrixController < ApplicationController
         		c=0
         	end
         	pos = rand(2+(@@rows*@@columns)/@@total_mines)
-        	if ((c+pos) < @@columns) && (r != p || c != q)
+        	if ((c+pos) < @@columns) && (r != p || (c+pos) != q)
         		c += pos
         		if @@matrix[r][c] >= 0
 				   @@matrix[r][c] = -1
@@ -46,7 +40,6 @@ class PrepareMatrixController < ApplicationController
 				c = 0
 			end
         end
-		@@mat = @@matrix
 	end
 	def modify_cell_values(r,c)
 		
@@ -68,6 +61,11 @@ class PrepareMatrixController < ApplicationController
 		@opened_cells = []
 		r = params[:row].to_i
 		c = params[:col].to_i
+		#byebug
+		if @@first_click
+		    place_mines(r,c)
+			@@first_click = false
+		end
 		open_matrix(r,c)
 		respond_to do |format|
 			format.js {render json: @opened_cells}
@@ -75,10 +73,6 @@ class PrepareMatrixController < ApplicationController
 
 	end
 	def open_matrix(r,c)
-		if @@first_click
-			place_mines(r,c)
-			@@first_click = false
-		end
 		if(@@mat[r][c] > -2)
 			if @@matrix[r][c] < 0
 				@opened_cells.push({id:"#{r}#{c}", value: -1})

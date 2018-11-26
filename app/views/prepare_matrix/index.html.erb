@@ -8,11 +8,11 @@
 			<%= form_tag({controller: 'prepare_matrix', action: 'generate_matrix'}, method: 'get') do %>
 			    <div class="form-group">
 					<label>Number of Rows</label>
-					<%= number_field :matrix, :rows, step: 1, min: 8, required: true, class: 'form-control' %>
+					<%= number_field :matrix, :rows, step: 1, min: 8,max: 16, required: true, class: 'form-control' %>
 				</div>
 				<div class="form-group">
 					<label>Number of Columns</label>
-					<%= number_field :matrix, :columns, step: 1, min: 8, required: true, class: 'form-control' %>
+					<%= number_field :matrix, :columns, step: 1, min: 8,max: 16, required: true, class: 'form-control' %>
 				</div>
 				<%= submit_tag :submit, class: 'btn btn-primary'%>
 				
