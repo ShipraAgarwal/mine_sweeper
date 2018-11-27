@@ -8,7 +8,7 @@
 					j=0 %>
 					<tr>
 						<% row.each do |col| %>
-							<td onclick="update_matrix(this)" data-row="<%= i %>" data-col="<%= j %>"data-flag="closed" id="<%= i%><%=j %>" class="closed"></td>
+							<td onmousedown = "recognise_event(event,this)" data-row="<%= i %>" data-col="<%= j %>"data-flag=" " id="<%= i%><%=j %>" class="closed"></td>
 							<% j+=1 %>
 						<% end %>
 					</tr>
@@ -17,8 +17,12 @@
 			</table>
 		</div>
 		<div class="resultcontainer col-sm-4">
-			
-			<p>Timer: <span id="timer">0 sec</span></p>
+			<p class="instructions text-left">
+				<h6>Instructions:</h6>
+				<p>1. click left to open a cell</p>
+				<p>2. click mid to mark a cell </p>
+			</p>
+			<p class="timer">Timer: <span id="timer">0 sec</span></p>
 			<h3 id="msg"></h3>
 		</div>
 	</div>
@@ -37,6 +41,20 @@
 			}
 			//console.log(<%#=@@matrix%>)
 			document.getElementById("timer").innerHTML = time + ' sec';
+		}
+		function recognise_event(e,cell){
+			if(cell.attributes[3].nodeValue == "flagged"){
+				if(e.which == 2){
+					toggel_flag(cell);
+				}
+			}
+			else if(e.which == 1){
+				update_matrix(cell);
+			}
+			else if(e.which == 2){
+				toggel_flag(cell);
+			}
+
 		}
 		function update_matrix(cell){
 
@@ -58,12 +76,12 @@
 		        if(d["value"]==-1){
 		          document.getElementById("msg").innerHTML = "YOU LOST";
 		          
-		          $('td').attr("onclick" , " ");
+		          $('td').attr("onmousedown" , " ");
 		          clearInterval(time_id);
 		        }
 		        else if(d["pending"]==0){
 		          document.getElementById("msg").innerHTML = "YOU WON";
-		          $('td').attr("onclick" , " ");
+		          $('td').attr("onmousedown" , " ");
 		          clearInterval(time_id);
 		        }		            	
 		        var e = document.getElementById(d["id"]);
@@ -75,6 +93,17 @@
 				
 			});
 			
+		}
+
+		function toggel_flag(cell){
+			if(cell.attributes[3].nodeValue == "flagged"){
+				cell.className = "closed";
+				cell.attributes[3].nodeValue = " ";
+			}
+			else{
+				cell.className = "flagged";
+				cell.attributes[3].nodeValue = "flagged";			}
+
 		}
 
 	</script>

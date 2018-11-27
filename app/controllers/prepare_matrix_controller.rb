@@ -9,7 +9,7 @@ class PrepareMatrixController < ApplicationController
 		@@columns = size[:columns].to_i
 		@@matrix = Array.new(@@rows) {Array.new(@@columns,0)}
 		@@mat = Array.new(@@rows) {Array.new(@@columns,0)}
-		@@total_mines = (@@rows*@@columns)/4
+		@@total_mines = (@@rows*@@columns)/5
 		@@safe_cells = (@@rows * @@columns) - @@total_mines 
       
        	@@first_click = true

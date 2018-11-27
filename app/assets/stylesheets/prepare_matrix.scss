@@ -21,21 +21,24 @@ td{
 	width:50px;
 	height:50px;
 	opacity:0.7;
+	
 }
-
 .closed{
-	background-color: gray;
-	}
+	background-color:grey;
+}
+.flagged{
+	background-color:black;
+}
 .opened{
 	background-color:white;
 }
 .resultcontainer{
 	display:inline-block;
 	vertical-align: top;
-	text-align: center;
+	
 	padding-top:50px;
 }
-p{
+.timer{
 	font-size:20px;
 	font-weight:400;
 }
