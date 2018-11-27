@@ -8,7 +8,7 @@
 					j=0 %>
 					<tr>
 						<% row.each do |col| %>
-							<td onmousedown = "recognise_event(event,this)" data-row="<%= i %>" data-col="<%= j %>"data-flag=" " id="<%= i%><%=j %>" class="closed"></td>
+							<td onmousedown = "recognise_event(event,this)" data-row="<%= i %>" data-col="<%= j %>"data-flag=" " id="<%= i%>,<%=j %>" class="closed"></td>
 							<% j+=1 %>
 						<% end %>
 					</tr>

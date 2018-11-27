@@ -75,10 +75,10 @@ class PrepareMatrixController < ApplicationController
 	def open_matrix(r,c)
 		if(@@mat[r][c] > -2)
 			if @@matrix[r][c] < 0
-				@opened_cells.push({id:"#{r}#{c}", value: -1})
+				@opened_cells.push({id:"#{r},#{c}", value: -1})
 			elsif @@matrix[r][c] == 0				
 				@@safe_cells = @@safe_cells-1
-				@opened_cells.push({:id => "#{r}#{c}", :value => @@matrix[r][c], :pending =>@@safe_cells})
+				@opened_cells.push({:id => "#{r},#{c}", :value => @@matrix[r][c], :pending =>@@safe_cells})
 				@@mat[r][c] = -2
 				i = r-1
 				while i <= (r+1)
@@ -91,7 +91,7 @@ class PrepareMatrixController < ApplicationController
 								else
 								    if @@mat[i][j] > -2
 								   		@@safe_cells = @@safe_cells-1
-								   		@opened_cells.push({:id => "#{i}#{j}", :value => @@matrix[i][j], :pending =>@@safe_cells})
+								   		@opened_cells.push({:id => "#{i},#{j}", :value => @@matrix[i][j], :pending =>@@safe_cells})
 								    	@@mat[i][j] = -2
 								   	end
 								end
@@ -103,7 +103,7 @@ class PrepareMatrixController < ApplicationController
 				end
 			else
 				@@safe_cells = @@safe_cells-1
-				@opened_cells.push({:id => "#{r}#{c}", :value => @@matrix[r][c], :pending =>@@safe_cells})
+				@opened_cells.push({:id => "#{r},#{c}", :value => @@matrix[r][c], :pending =>@@safe_cells})
 				@@mat[r][c] = -2
 				
 			end
